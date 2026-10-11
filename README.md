@@ -45,27 +45,28 @@ PDF脚本默认使用Windows微软雅黑中文字体。其他系统需设置 `RE
 
 7. **增加英文版**：创建 `en/index.html`，将 `lang` 设为 `en` 并翻译文案；共享样式和脚本使用 `../styles.css`、`../script.js`。将英文页的PDF、封面和视频路径改为 `../assets/...`，并调整脚本的视频资源前缀。确认英文页面可用后再添加语言切换链接。当前没有未实现的语言切换按钮。
 
-## GitHub Pages部署步骤
+## 已部署到 GitHub Pages
 
-已按用户授权创建公开仓库 `https://github.com/luoldldldldld-source/resumes`。截至2026-10-11，文件尚未上传，GitHub Pages尚未启用；上传工具连接GitHub授权服务超时，待网络恢复后继续。
+- 正式网站：https://luoldldldldld-source.github.io/resumes/
+- 源代码仓库：https://github.com/luoldldldldld-source/resumes
+- 发布配置：`Deploy from a branch`，`main` 分支，`/(root)`，HTTPS 已开启。
+- 首次发布日期：2026-10-11。
 
-1. 登录你的GitHub账号，创建仓库，例如 `portfolio`。免费方案可使用公开仓库。
-2. 把本目录的内容放到仓库根目录：`index.html` 应位于根目录，不要把整个文件夹再嵌套一层。不要上传原始简历、工作目录或原始视频。
-3. 视频超过浏览器上传大小限制，建议使用GitHub Desktop或Git命令提交整个目录。不要把MP4交给Git LFS后直接期望GitHub Pages播放。
-4. 在仓库 `Settings → Pages → Build and deployment` 中，将 Source 设为 `Deploy from a branch`，选择 `main` 分支、`/(root)`，保存。
-5. 等待部署完成，打开Pages设置中给出的地址。普通仓库的地址通常为 `https://luoldldldldld-source.github.io/resumes/`。本项目使用相对路径，支持仓库子目录地址。
-6. 在线复查所有栏目、手机菜单、三段视频、邮箱和PDF下载。后续更新文件并提交到 `main`，Pages会重新发布。
+### 日后更新网站
 
-若已经安装Git，也可在本目录运行以下命令。请先把占位地址替换成你确认的仓库地址；`git push` 会上传所选文件。
+小幅文案修改可在 GitHub 打开 `index.html`，点击编辑并提交到 `main`。涉及简历的修改要同时更新 PDF 和 `tools/build_resume.py`。视频超过浏览器上传限制，请使用 GitHub Desktop 或 Git 更新，不要使用 Git LFS 直接提供 Pages 视频。
+
+本地目录已经连接仓库。修改并检查后，在本目录执行：
 
 ```sh
-git init
 git add index.html styles.css script.js assets tools README.md .nojekyll .gitignore
-git commit -m "Add personal portfolio website"
-git branch -M main
-git remote add origin https://github.com/luoldldldldld-source/resumes.git
-git push -u origin main
+git commit -m "Update portfolio"
+git push origin main
 ```
+
+提交后在仓库 Actions 查看 `pages build and deployment` 是否成功。GitHub 会自动重新发布，可能需要几分钟。上线后复查导航、手机菜单、视频和 PDF。不要上传原始简历、工作目录、凭据或未经确认的个人信息。
+
+首次部署时，浏览器使用系统代理，但 GitHub CLI 未自动使用代理，导致授权超时。若再次出现连接问题，可仅在当前终端设置 `HTTPS_PROXY`/`HTTP_PROXY` 为电脑实际配置的代理地址，再重试；不需要关闭证书验证或修改系统保护设置。GitHub CLI 登录凭据由系统钥匙串保存，不包含在此源码包中。
 
 部署依据：[GitHub Pages官方入门文档](https://docs.github.com/en/pages/quickstart)。GitHub普通仓库阻止大于100 MiB的单文件，浏览器上传上限为25 MiB；本项目所有视频均小于100 MiB。参见[大文件限制](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)。
 
